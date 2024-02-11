@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 
 
@@ -53,9 +54,12 @@ const SignIn = ({ searchParams: { error } }: SignInProps) => {
   const passwordValue = watch('password')
 
   const onSubmit = useCallback(() => {
+    if (error) {
+      console.log("ERROR", error)
+    }
     router.push(AUTH_ROUTES.OTP)
     console.log("SIGN IN DATA", emailValue, passwordValue)
-  }, [emailValue, passwordValue, router]);
+  }, [emailValue, passwordValue, router, error]);
 
 
 

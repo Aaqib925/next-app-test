@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 
 import Appbuttons from '@/components/buttons/Appbuttons';
@@ -19,15 +20,15 @@ interface ProfileProps {
 const Profile: React.FC<ProfileProps> = ({ user }) => {
   const { username, email, firstName, lastName, profileImage } = user;
 
-  const handleUpdateProfile = () => {
-    // Placeholder logic for updating profile
-    console.log('Updating profile...');
-  };
+  // const handleUpdateProfile = () => {
+  //   // Placeholder logic for updating profile
+  //   console.log('Updating profile...');
+  // };
 
-  const handleUpdatePassword = () => {
-    // Placeholder logic for changing password
-    console.log('Changing password...');
-  };
+  // const handleUpdatePassword = () => {
+  //   // Placeholder logic for changing password
+  //   console.log('Changing password...');
+  // };
 
   return (
 
