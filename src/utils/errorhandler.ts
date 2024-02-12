@@ -1,7 +1,9 @@
 import { signOut } from 'next-auth/react';
 
 import logger from '@/lib/logger';
-import StatusCodes from '@/constant/statusCodes';
+
+import StatusCodes from '@/constant/StatusCodes';
+
 
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

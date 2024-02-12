@@ -27,7 +27,7 @@ interface AppConfig {
 
 export const AppConfig: AppConfig = {
   LIMIT: 10,
-  PERSIST_SECRET_KEY: 'persist:secret-key-nestbox-ai',
+  PERSIST_SECRET_KEY: 'persist:secret-key-next-app-test',
   ENVIRONMENT: APP_ENVIRONMENT.STAGING,
   ENVIRONMENTS: {
     [APP_ENVIRONMENT.LOCAL]: {

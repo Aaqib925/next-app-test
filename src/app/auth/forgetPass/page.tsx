@@ -1,4 +1,6 @@
 'use client';
+import { SendOtpApiRequest } from 'hooks/auth/interface';
+import { useSendOtp } from 'hooks/auth/mutation';
 import useFormWithSchema from 'hooks/useFormWithSchema';
 import { useRouter } from 'next/navigation';
 import React, { useCallback, useState } from 'react';
@@ -22,6 +24,9 @@ const otpValidationSchema = Yup.object({
 });
 
 const Otp = () => {
+
+  const {mutateAsync: sendOtp} = useSendOtp();
+
   const router = useRouter();
   const [isAccountConfirmed, setIsAccountConfirmed] = useState(false);
   const [otpValue, setOtpValue] = useState('');
@@ -38,9 +43,10 @@ const Otp = () => {
     control: controlForOtp,
   } = useFormWithSchema(otpValidationSchema);
 
-  const onSubmitEmail = useCallback(() => {
+  const onSubmitEmail = useCallback((formData: SendOtpApiRequest) => {
+    sendOtp(formData)
     setIsAccountConfirmed(true);
-  }, []);
+  }, [sendOtp]);
 
   const onSubmitOtp = useCallback(() => {
     router.push(AUTH_ROUTES.HOME);
@@ -49,8 +55,8 @@ const Otp = () => {
   return (
     <div className="flex flex-col h-screen justify-center items-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-3xl font-semibold mb-4 text-center">Verify OTP</h2>
-        <h5>Type your mail for reset your password</h5>
+        <h2 className="text-3xl font-semibold mb-4 text-center">Forgot Password ?</h2>
+        <h5 className='w-full text-center text-sm'>Enter your Registered Email below for OTP verification</h5>
         <form onSubmit={handleSubmitForEmail(onSubmitEmail)} className='flex flex-col gap-4'>
           <div className='col-span-6 mt-8 flex flex-col items-center gap-4'>
             <Controller
@@ -70,7 +76,7 @@ const Otp = () => {
               defaultValue=''
             />
             {!isAccountConfirmed && (
-              <Appbuttons title='Confirm Account' />
+              <Appbuttons title='Send OTP' />
             )}
           </div>
         </form>
@@ -97,9 +103,7 @@ const Otp = () => {
                 name='otp'
                 control={controlForOtp}
               />
-              {otpValue && (
-                <Appbuttons title='Update Password' />
-              )}
+              <Appbuttons title='Update Password' />
             </div>
           </form>
         )}

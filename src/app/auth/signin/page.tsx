@@ -2,6 +2,7 @@
 'use client';
 import useFormWithSchema from 'hooks/useFormWithSchema';
 import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
 import { useCallback } from 'react';
 import { Controller } from 'react-hook-form';
 import { AUTH_ROUTES } from 'routes/page';
@@ -10,11 +11,11 @@ import * as Yup from 'yup';
 import Appbuttons from '@/components/buttons/Appbuttons';
 import TextInput from '@/components/input/TextInput';
 
-interface SignInProps {
-  searchParams: {
-    error?: string;
-  };
-}
+// interface SignInProps {
+//   searchParams: {
+//     error?: string;
+//   };
+// }
 
 interface SignIn {
   email: string;
@@ -22,7 +23,6 @@ interface SignIn {
 }
 
 const SignInValidationSchema = Yup.object({
-  otp: Yup.number().required("OTP IS REQUIRED"),
   email: Yup.string()
     .email()
     .matches(
@@ -36,7 +36,9 @@ const SignInValidationSchema = Yup.object({
 });
 
 
-const SignIn = ({ searchParams: { error } }: SignInProps) => {
+const SignIn = (
+  // { searchParams: { error } }: SignInProps
+  ) => {
 
   const {
     handleSubmit,
@@ -47,16 +49,17 @@ const SignIn = ({ searchParams: { error } }: SignInProps) => {
 
   const router = useRouter();
 
-  const emailValue = watch('email')
-  const passwordValue = watch('password')
-
-  const onSubmit = useCallback(() => {
-    if (error) {
-      console.log("ERROR", error)
-    }
-    router.push(AUTH_ROUTES.OTP)
-    console.log("SIGN IN DATA", emailValue, passwordValue)
-  }, [emailValue, passwordValue, router, error]);
+  const onSubmit = useCallback(async (formData: any) => {
+    console.log("BEING CLICKED");
+    console.log("BEING CLICKED", formData);
+    await signIn('credentials', {
+      email: formData.email,
+      password: formData.password,
+      isNewUser: true,
+      callbackUrl: '/home'
+    })
+    router.push('/home');
+  }, [router]);
 
 
 
@@ -91,7 +94,6 @@ const SignIn = ({ searchParams: { error } }: SignInProps) => {
                 name='email'
                 control={control}
                 defaultValue=''
-
               />
 
 
@@ -115,12 +117,9 @@ const SignIn = ({ searchParams: { error } }: SignInProps) => {
               />
 
               <div className='col-span-6 mt-8 flex flex-col items-center gap-4'>
-
-
-
-                <Appbuttons title='Sign In' />
-                <a className=' text-sky-600 underline' href={AUTH_ROUTES.FORGETPASS}>Forget Password ?</a>
-                <p className=' text-center text-sm text-gray-500'>
+                <Appbuttons title='Sign In' onClick={handleSubmit(onSubmit)} />
+                <a className='text-sky-600 underline' href={AUTH_ROUTES.FORGETPASS}>Forget Password ?</a>
+                <p className='text-center text-sm text-gray-500'>
                   Don&apos;t have an account?{' '}
                   <a
                     href={AUTH_ROUTES.SIGN_UP}
@@ -128,9 +127,7 @@ const SignIn = ({ searchParams: { error } }: SignInProps) => {
                   >
                     Sign Up
                   </a>
-
                   .
-
                 </p>
               </div>
             </form>

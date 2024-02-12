@@ -9,7 +9,6 @@ import * as Yup from 'yup';
 import Appbuttons from '@/components/buttons/Appbuttons';
 import TextInput from '@/components/input/TextInput';
 import ImageUpload from '@/components/uploads/ImageUpload';
-import { signIn } from 'next-auth/react';
 
 
 interface SignUpData {
@@ -49,16 +48,19 @@ const SignUp = () => {
   const onSubmit = useCallback((data: SignUpData) => {
 
     const formData = new FormData();
-    formData.append('name', data.name);
-    formData.append('email', data.email);
-    formData.append('password', data.password);
-    formData.append('profile_image', fileInputRef.current?.files?.[0] as Blob);
+    formData.set('name', data.name);
+    formData.set('email', data.email);
+    formData.set('password', data.password);
+    formData.set('profile_image', fileInputRef.current?.files?.[0] as Blob);
 
-    signIn('credentials', {
-      formData,
-      isNewUser: true,
-      callbackUrl: `${window.origin}/home`,
-    });
+    console.log("DATA ==> ", data)
+    console.log("FORMDATA ==> ", formData.get('profile_image'))
+
+    // signIn('credentials', {
+    //   formData,
+    //   isNewUser: true,
+    //   callbackUrl: `${window.origin}/home`,
+    // });
   }, []);
 
   const handleImageClick = useCallback(() => {
@@ -188,7 +190,7 @@ const SignUp = () => {
                 }}
                 name='email'
                 control={control}
-                defaultValue={''}
+                defaultValue=""
               />
 
               <div className='flex flex-col gap-4 md:flex-row'>

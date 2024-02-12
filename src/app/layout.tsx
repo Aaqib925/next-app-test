@@ -1,11 +1,15 @@
 import { Metadata } from 'next';
+import { getServerSession } from 'next-auth';
 import * as React from 'react';
 
 import '@/styles/globals.css';
 // !STARTERCONF This is for demo purposes, remove @/styles/colors.css import immediately
 import '@/styles/colors.css';
 
+import { authOptions } from '@/lib/auth';
+
 import { siteConfig } from '@/constant/config';
+import { QCProvider } from '@/provider';
 
 // !STARTERCONF Change these default meta
 // !STARTERCONF Look at @/constant/config to change them
@@ -49,14 +53,24 @@ export const metadata: Metadata = {
   // ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+
+  const session = await getServerSession(authOptions);
+
   return (
+    // <html>
+    //   <body>{children}</body>
+    // </html>
     <html>
-      <body>{children}</body>
+      <body className='lg:min-h-screen'>
+          <QCProvider>
+              {children}
+          </QCProvider>
+      </body>
     </html>
   );
 }
