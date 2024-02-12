@@ -1,25 +1,25 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 import useFormWithSchema from 'hooks/useFormWithSchema';
-import React from 'react'
+import React, { SetStateAction, useCallback, useRef, useState } from 'react'
 import { Controller } from 'react-hook-form';
 import { AUTH_ROUTES } from 'routes/page';
 import * as Yup from 'yup';
 
 import Appbuttons from '@/components/buttons/Appbuttons';
 import TextInput from '@/components/input/TextInput';
+import ImageUpload from '@/components/uploads/ImageUpload';
+import { signIn } from 'next-auth/react';
 
 
 interface SignUpData {
-  firstName: string;
-  lastName: string;
+  name: string;
   email: string;
   password: string;
   confirmPassword: string;
 }
 const SignUpValidationSchema = Yup.object({
-  firstName: Yup.string().required('First name is required.'),
-  lastName: Yup.string().required('Last name is required.'),
+  name: Yup.string().required('Name is required.'),
   email: Yup.string()
     .email()
     .matches(
@@ -35,15 +35,55 @@ const SignUpValidationSchema = Yup.object({
     .required('Confirm password is required.'),
 });
 const SignUp = () => {
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [selectedImage, setSelectedImage] = useState('');
+
+
   const {
     handleSubmit,
     formState: { errors },
     control,
   } = useFormWithSchema(SignUpValidationSchema);
-  const onSubmit = (data: SignUpData) => {
 
-    console.log(data, "On Submit data");
-  };
+  const onSubmit = useCallback((data: SignUpData) => {
+
+    const formData = new FormData();
+    formData.append('name', data.name);
+    formData.append('email', data.email);
+    formData.append('password', data.password);
+    formData.append('profile_image', fileInputRef.current?.files?.[0] as Blob);
+
+    signIn('credentials', {
+      formData,
+      isNewUser: true,
+      callbackUrl: `${window.origin}/home`,
+    });
+  }, []);
+
+  const handleImageClick = useCallback(() => {
+    fileInputRef.current?.click();
+  }, []);
+
+  const handleImageChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const imageFile = new FormData();
+      imageFile.append('image', e.target.files?.[0] as Blob);
+      const file = e.target.files?.[0];
+      // make formdata of a file
+
+      if (file) {
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+          setSelectedImage(reader.result as SetStateAction<string>);
+        };
+
+        reader.readAsDataURL(file);
+      }
+    },
+    []
+  );
 
   return (
 
@@ -103,13 +143,21 @@ const SignUp = () => {
 
 
             <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-6'>
+              <div className='flex justify-center'>
+                <ImageUpload
+                  selectedImage={selectedImage}
+                  handleImageClick={handleImageClick}
+                  fileInputRef={fileInputRef}
+                  handleImageChange={handleImageChange}
+                />
+              </div>
               <div className='flex flex-col gap-4 md:flex-row'>
                 <Controller
                   render={({ field: { onChange, onBlur, value, name } }) => {
                     return (
                       <TextInput
-                        label='First Name'
-                        name='firstName'
+                        label='Name'
+                        name='name'
                         value={value}
                         onChange={onChange}
                         onBlur={onBlur}
@@ -117,28 +165,11 @@ const SignUp = () => {
                       />
                     );
                   }}
-                  name='firstName'
+                  name='name'
                   control={control}
                   defaultValue=''
                 />
 
-                <Controller
-                  render={({ field: { onChange, onBlur, value, name } }) => {
-                    return (
-                      <TextInput
-                        label='Last Name'
-                        name='lastName'
-                        value={value}
-                        onChange={onChange}
-                        onBlur={onBlur}
-                        error={errors?.[name]?.message}
-                      />
-                    );
-                  }}
-                  name='lastName'
-                  control={control}
-                  defaultValue=''
-                />
               </div>
 
               <Controller
@@ -157,7 +188,7 @@ const SignUp = () => {
                 }}
                 name='email'
                 control={control}
-                defaultValue={sessionStorage?.user?.email || ''}
+                defaultValue={''}
               />
 
               <div className='flex flex-col gap-4 md:flex-row'>
@@ -199,29 +230,7 @@ const SignUp = () => {
                   defaultValue=''
                 />
               </div>
-              <div className="col-span-6">
-                <label className="flex gap-4">
-                  <input
-                    type="checkbox"
-                    id="MarketingAccept"
-                    name="marketing_accept"
-                    className="size-5 rounded-md border-gray-200 bg-white shadow-sm"
-                  />
 
-                  <span className="text-sm text-gray-700">
-                    I want to receive emails about events, product updates and company announcements.
-                  </span>
-                </label>
-              </div>
-
-              <div className="col-span-6">
-                <p className="text-sm text-gray-500">
-                  By creating an account, you agree to our
-                  <a href="#" className="text-gray-700 underline"> terms and conditions </a>
-                  and
-                  <a href="#" className="text-gray-700 underline">privacy policy</a>.
-                </p>
-              </div>
               <div className='col-span-6 mt-8 flex flex-col items-center gap-4'>
                 <Appbuttons title='Create an account' />
 

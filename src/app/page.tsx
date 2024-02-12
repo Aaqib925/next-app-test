@@ -16,12 +16,20 @@ import UnstyledLink from '@/components/links/UnstyledLink';
  * @see https://stackoverflow.com/questions/68103844/how-to-override-next-js-svg-module-declaration
  */
 import Logo from '~/svg/Logo.svg';
+import { useRouter } from 'next/navigation';
+
 
 // !STARTERCONF -> Select !STARTERCONF and CMD + SHIFT + F
 // Before you begin editing, follow all comments with `STARTERCONF`,
 // to customize the default configuration.
 
+
 export default function HomePage() {
+
+  const router = useRouter();
+
+  React.useEffect(() => router.push('/auth/register'), [router]);
+
   return (
     <main>
       <Head>
