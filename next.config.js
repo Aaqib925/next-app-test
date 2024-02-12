@@ -6,7 +6,15 @@ const nextConfig = {
 
   reactStrictMode: true,
   swcMinify: true,
-
+  redirects: async () => {
+    return [
+      {
+        source: '/',
+        destination: '/dashboard',
+        permanent: true,
+      },
+    ];
+  },
   // Uncoment to add domain whitelist
   // images: {
   //   domains: [

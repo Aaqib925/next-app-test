@@ -19,6 +19,7 @@ interface SignIn {
 interface SignInProps {
   searchParams: {
     error: string;
+    callbackUrl: string;
   };
 }
 
@@ -35,7 +36,7 @@ const SignInValidationSchema = Yup.object({
     .required('Password is required.'),
 });
 
-const SignIn = ({ searchParams: { error } }: SignInProps) => {
+const SignIn = ({ searchParams: { error, callbackUrl } }: SignInProps) => {
   const {
     handleSubmit,
     formState: { errors },
@@ -53,7 +54,7 @@ const SignIn = ({ searchParams: { error } }: SignInProps) => {
         email: formData.email,
         password: formData.password,
         isNewUser: true,
-        callbackUrl: '/home',
+        callbackUrl: callbackUrl || '/dashboard',
       });
       // router.push('/home');
       setIsSigningIn(false);
