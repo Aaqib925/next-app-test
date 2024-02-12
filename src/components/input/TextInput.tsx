@@ -22,6 +22,7 @@ interface TextInputProps {
   isTextArea?: boolean;
   readOnly?: boolean;
   errorStyles?: string;
+  customInputStyles?: string;
 }
 
 const TextInput = ({
@@ -36,6 +37,7 @@ const TextInput = ({
   isTextArea = false,
   readOnly = false,
   errorStyles,
+  customInputStyles = '',
 }: TextInputProps) => {
   const labelId = label?.split(' ').join(',');
 
@@ -57,12 +59,12 @@ const TextInput = ({
           onChange={onChange}
           onBlur={onBlur}
           readOnly={readOnly}
-          className='mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm'
+          className={`mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm ${customInputStyles}`}
         />
       ) : (
         <textarea
           placeholder={placeholder}
-          className='mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm'
+          className={`mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm ${customInputStyles}`}
           name={name}
           value={value}
           onBlur={onBlur}

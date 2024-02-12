@@ -76,7 +76,7 @@ export const authOptions: NextAuthOptions = {
       if (trigger === 'update' && session) {
         return { ...token, ...session?.user };
       }
-      
+
       return { ...token, ...user };
     },
     async session({

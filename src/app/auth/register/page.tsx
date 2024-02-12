@@ -38,7 +38,7 @@ const SignUpValidationSchema = Yup.object({
 });
 const SignUp = () => {
 
-  const {mutateAsync: registerUser} = useRegisterUser();
+  const {mutateAsync: registerUser, isPending: isLoadingRegisterUser} = useRegisterUser();
 
   const router = useRouter();
 
@@ -222,7 +222,7 @@ const SignUp = () => {
                 />
               </div>
               <div className='col-span-6 mt-8 flex flex-col items-center gap-4'>
-                <Appbuttons title='Create an account' />
+                <Appbuttons title='Create an account' isLoading={isLoadingRegisterUser}/>
 
                 <p className=' mt-4 text-sm text-gray-500 sm:mt-0'>
                   Already have an account?{' '}
