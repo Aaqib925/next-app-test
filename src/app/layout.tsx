@@ -62,9 +62,6 @@ export default async function RootLayout({
   const session = await getServerSession(authOptions);
 
   return (
-    // <html>
-    //   <body>{children}</body>
-    // </html>
     <html>
       <body className='lg:min-h-screen'>
         <AuthProvider session={session}>

@@ -32,7 +32,7 @@ export const fetchUtil = async (data: FetchData) => {
   }
 
   if (token) {
-    headers = { ...headers, Authorization: `${token}` };
+    headers = { ...headers, Authorization: `Bearer ${token}` };
   }
 
   return fetch(`http://127.0.0.1:8000${url}`, {

@@ -55,14 +55,12 @@ export const authOptions: NextAuthOptions = {
               },
               isAuthorized: false,
             });
-            console.log("RESPONSE MESSAGE ==> ", res?.data?.access_token)
             user = {
-              token: res?.data?.access_token,
+              token: res.access_token,
               email: credentials?.email
             }
           }
           catch (error: any) {
-            console.log("ERROR MESSAGE ==> ", error?.message)
             throw new Error(error?.message);
           }
         }

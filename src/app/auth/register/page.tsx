@@ -2,6 +2,7 @@
 'use client';
 import { useRegisterUser } from 'hooks/auth/mutation';
 import useFormWithSchema from 'hooks/useFormWithSchema';
+import { useRouter } from 'next/navigation';
 import React, { SetStateAction, useCallback, useRef, useState } from 'react'
 import { Controller } from 'react-hook-form';
 import { AUTH_ROUTES } from 'routes/page';
@@ -38,9 +39,10 @@ const SignUp = () => {
 
   const {mutateAsync: registerUser} = useRegisterUser();
 
+  const router = useRouter();
+
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedImage, setSelectedImage] = useState('');
-
 
   const {
     handleSubmit,
@@ -48,16 +50,16 @@ const SignUp = () => {
     control,
   } = useFormWithSchema(SignUpValidationSchema);
 
-  const onSubmit = useCallback((data: SignUpData) => {
+  const onSubmit = useCallback(async (data: SignUpData) => {
 
     const formData = new FormData();
     formData.set('name', data.name);
     formData.set('email', data.email);
     formData.set('password', data.password);
     formData.set('profile_image', fileInputRef.current?.files?.[0] as Blob);
-    console.log("DATA ==> ", data)
-    registerUser(formData);
-  }, [registerUser]);
+    await registerUser(formData);
+    router.push(AUTH_ROUTES.SIGN_IN);
+  }, [registerUser, router]);
 
   const handleImageClick = useCallback(() => {
     fileInputRef.current?.click();
