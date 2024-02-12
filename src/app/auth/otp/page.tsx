@@ -8,8 +8,6 @@ import * as Yup from 'yup';
 
 import Appbuttons from '@/components/buttons/Appbuttons';
 import TextInput from '@/components/input/TextInput';
-
-
 const OtpValidationSchema = Yup.object({
   otp: Yup.number()
     .required("OTP IS REQUIRED")
@@ -24,13 +22,9 @@ const Otp = () => {
     formState: { errors },
     control,
   } = useFormWithSchema(OtpValidationSchema);
-
-
   const onSubmit = useCallback(() => {
     router.push(AUTH_ROUTES.HOME);
   }, [router]);
-
-
   return (
     <><div className="flex flex-col h-screen justify-center items-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">

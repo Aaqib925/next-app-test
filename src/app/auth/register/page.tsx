@@ -1,6 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
+
 'use client';
 import useFormWithSchema from 'hooks/useFormWithSchema';
+import { signIn } from 'next-auth/react';
 import React, { SetStateAction, useCallback, useRef, useState } from 'react'
 import { Controller } from 'react-hook-form';
 import { AUTH_ROUTES } from 'routes/page';
@@ -9,7 +10,6 @@ import * as Yup from 'yup';
 import Appbuttons from '@/components/buttons/Appbuttons';
 import TextInput from '@/components/input/TextInput';
 import ImageUpload from '@/components/uploads/ImageUpload';
-import { signIn } from 'next-auth/react';
 
 
 interface SignUpData {
@@ -84,9 +84,7 @@ const SignUp = () => {
     },
     []
   );
-
   return (
-
     <>
       <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
         <section className="relative flex h-32 items-end bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
@@ -139,9 +137,6 @@ const SignUp = () => {
                 Register your self
               </p>
             </div>
-
-
-
             <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-6'>
               <div className='flex justify-center'>
                 <ImageUpload
@@ -169,9 +164,7 @@ const SignUp = () => {
                   control={control}
                   defaultValue=''
                 />
-
               </div>
-
               <Controller
                 render={({ field: { onChange, onBlur, value, name } }) => {
                   return (
@@ -188,9 +181,8 @@ const SignUp = () => {
                 }}
                 name='email'
                 control={control}
-                defaultValue={''}
+                defaultValue=""
               />
-
               <div className='flex flex-col gap-4 md:flex-row'>
                 <Controller
                   render={({ field: { onChange, onBlur, value, name } }) => {
@@ -210,7 +202,6 @@ const SignUp = () => {
                   control={control}
                   defaultValue=''
                 />
-
                 <Controller
                   render={({ field: { onChange, onBlur, value, name } }) => {
                     return (
@@ -230,7 +221,6 @@ const SignUp = () => {
                   defaultValue=''
                 />
               </div>
-
               <div className='col-span-6 mt-8 flex flex-col items-center gap-4'>
                 <Appbuttons title='Create an account' />
 

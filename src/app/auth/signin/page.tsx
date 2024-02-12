@@ -10,19 +10,18 @@ import * as Yup from 'yup';
 import Appbuttons from '@/components/buttons/Appbuttons';
 import TextInput from '@/components/input/TextInput';
 
+
 interface SignInProps {
   searchParams: {
     error?: string;
   };
 }
-
 interface SignIn {
   email: string;
   password: string;
 }
-
 const SignInValidationSchema = Yup.object({
-  otp: Yup.number().required("OTP IS REQUIRED"),
+
   email: Yup.string()
     .email()
     .matches(
@@ -34,8 +33,6 @@ const SignInValidationSchema = Yup.object({
     .min(8, 'Password must be at least 8 characters.')
     .required('Password is required.'),
 });
-
-
 const SignIn = ({ searchParams: { error } }: SignInProps) => {
 
   const {
@@ -59,8 +56,8 @@ const SignIn = ({ searchParams: { error } }: SignInProps) => {
   }, [emailValue, passwordValue, router, error]);
 
 
-
   return (
+
     <>
       <div className="relative flex flex-wrap lg:h-screen lg:items-center">
         <div className="w-full px-4 py-12 sm:px-6 sm:py-16 lg:w-1/2 lg:px-8 lg:py-24">
@@ -91,10 +88,7 @@ const SignIn = ({ searchParams: { error } }: SignInProps) => {
                 name='email'
                 control={control}
                 defaultValue=''
-
               />
-
-
               <Controller
                 render={({ field: { onChange, onBlur, value, name } }) => {
                   return (
@@ -113,11 +107,7 @@ const SignIn = ({ searchParams: { error } }: SignInProps) => {
                 control={control}
                 defaultValue=''
               />
-
               <div className='col-span-6 mt-8 flex flex-col items-center gap-4'>
-
-
-
                 <Appbuttons title='Sign In' />
                 <a className=' text-sky-600 underline' href={AUTH_ROUTES.FORGETPASS}>Forget Password ?</a>
                 <p className=' text-center text-sm text-gray-500'>
