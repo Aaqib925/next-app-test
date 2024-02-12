@@ -1,4 +1,3 @@
-
 'use client';
 import { LoginUserApiRequest } from 'hooks/auth/interface';
 import useFormWithSchema from 'hooks/useFormWithSchema';
@@ -17,6 +16,12 @@ interface SignIn {
   password: string;
 }
 
+interface SignInProps {
+  searchParams: {
+    error: string;
+  };
+}
+
 const SignInValidationSchema = Yup.object({
   email: Yup.string()
     .email()
@@ -30,9 +35,7 @@ const SignInValidationSchema = Yup.object({
     .required('Password is required.'),
 });
 
-
-const SignIn = () => {
-
+const SignIn = ({ searchParams: { error } }: SignInProps) => {
   const {
     handleSubmit,
     formState: { errors },
@@ -43,34 +46,40 @@ const SignIn = () => {
 
   const router = useRouter();
 
-  const onSubmit = useCallback(async (formData: LoginUserApiRequest) => {
-    setIsSigningIn(true);
-    await signIn('credentials', {
-      email: formData.email,
-      password: formData.password,
-      isNewUser: true,
-      callbackUrl: '/home'
-    })
-    router.push('/home');
-    setIsSigningIn(false);
-  }, [router]);
-
-
+  const onSubmit = useCallback(
+    async (formData: LoginUserApiRequest) => {
+      setIsSigningIn(true);
+      await signIn('credentials', {
+        email: formData.email,
+        password: formData.password,
+        isNewUser: true,
+        callbackUrl: '/home',
+      });
+      // router.push('/home');
+      setIsSigningIn(false);
+    },
+    [router]
+  );
 
   return (
     <>
-      <div className="relative flex flex-wrap lg:h-screen lg:items-center">
-        <div className="w-full px-4 py-12 sm:px-6 sm:py-16 lg:w-1/2 lg:px-8 lg:py-24">
-          <div className="mx-auto max-w-lg text-center">
-            <h1 className="text-2xl font-bold sm:text-3xl">Get started today!</h1>
+      <div className='relative flex flex-wrap lg:h-screen lg:items-center'>
+        <div className='w-full px-4 py-12 sm:px-6 sm:py-16 lg:w-1/2 lg:px-8 lg:py-24'>
+          <div className='mx-auto max-w-lg text-center'>
+            <h1 className='text-2xl font-bold sm:text-3xl'>
+              Get started today!
+            </h1>
 
-            <p className="mt-4 text-gray-500">
-              The company itself is a very successful company. And the free man has neither that mistake nor the fault itself, but therefore ours!
+            <p className='mt-4 text-gray-500'>
+              The company itself is a very successful company. And the free man
+              has neither that mistake nor the fault itself, but therefore ours!
             </p>
           </div>
-
           <div>
-            <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-4'>
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className='flex flex-col gap-4'
+            >
               <Controller
                 render={({ field: { onChange, onBlur, value, name } }) => {
                   return (
@@ -90,7 +99,6 @@ const SignIn = () => {
                 defaultValue=''
               />
 
-
               <Controller
                 render={({ field: { onChange, onBlur, value, name } }) => {
                   return (
@@ -109,10 +117,19 @@ const SignIn = () => {
                 control={control}
                 defaultValue=''
               />
-
+              {error && <p className='text-red-500 text-sm italic'>{error}</p>}
               <div className='col-span-6 mt-8 flex flex-col items-center gap-4'>
-                <Appbuttons title='Sign In' onClick={handleSubmit(onSubmit)} isLoading={isSigningIn} />
-                <a className='text-sky-600 underline' href={AUTH_ROUTES.FORGETPASS}>Forget Password ?</a>
+                <Appbuttons
+                  title='Sign In'
+                  onClick={handleSubmit(onSubmit)}
+                  isLoading={isSigningIn}
+                />
+                <a
+                  className='text-sky-600 underline'
+                  href={AUTH_ROUTES.FORGETPASS}
+                >
+                  Forget Password ?
+                </a>
                 <p className='text-center text-sm text-gray-500'>
                   Don&apos;t have an account?{' '}
                   <a
@@ -125,21 +142,18 @@ const SignIn = () => {
                 </p>
               </div>
             </form>
-
           </div>
-
         </div>
-        <div className="relative h-64 w-full sm:h-96 lg:h-full lg:w-1/2">
+        <div className='relative h-64 w-full sm:h-96 lg:h-full lg:w-1/2'>
           <img
-            alt=""
-            src="https://images.unsplash.com/photo-1617195737496-bc30194e3a19?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
-            className="absolute inset-0 h-full w-full object-cover"
+            alt=''
+            src='https://images.unsplash.com/photo-1617195737496-bc30194e3a19?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80'
+            className='absolute inset-0 h-full w-full object-cover'
           />
         </div>
-      </div >
-
+      </div>
     </>
-  )
-}
+  );
+};
 
 export default SignIn;

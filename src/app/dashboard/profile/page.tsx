@@ -13,12 +13,13 @@ const user = {
 
 const ProfilePage = () => {
   return (
-    <><div>
-      <Slide />
-      <div className='ml-64'>
-        <Profile user={user} />
+    <>
+      <div>
+        <Slide />
+        <div className='ml-64'>
+          <Profile user={user} />
+        </div>
       </div>
-    </div>
     </>
   );
 };
