@@ -1,4 +1,3 @@
-import { AppConfig } from '@/constant/env';
 import { handleFetchError } from '@/utils/errorhandler';
 
 interface FetchData {
@@ -36,11 +35,11 @@ export const fetchUtil = async (data: FetchData) => {
     headers = { ...headers, Authorization: `${token}` };
   }
 
-  return fetch(`${AppConfig.env()?.API_URL}${url}`, {
+  return fetch(`http://127.0.0.1:8000${url}`, {
     method,
     headers,
     body,
-    credentials,
+    credentials: 'include',
     ...(abortSignal && { signal: abortSignal }),
   }).then(handleFetchError);
 };

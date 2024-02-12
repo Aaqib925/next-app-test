@@ -4,7 +4,7 @@ import { SendOtpApiRequest } from 'hooks/auth/interface';
 import { Post } from '@/utils/apiService';
 
 const sendOtpAction = async (body: SendOtpApiRequest) => {
-  return Post({
+  return await Post({
     url: '/api/v1/otp/send',
     body,
     isAuthorized: false
