@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import Link from "next/link";
@@ -64,7 +65,7 @@ const Sidebar = () => {
     return (
         <>
             <nav
-                className="fixed top-0 left-0 w-full h-full border-r bg-white space-y-8 sm:w-80">
+                className="fixed top-0 left-0 w-full h-full border-r bg-white space-y-8 sm:w-[280px]">
                 <div className="flex flex-col h-full">
                     <Link href="/" className='h-20 flex items-center px-8'>
                         <img src="https://floatui.com/logo.svg" width={140} className="mx-auto" />

@@ -4,7 +4,6 @@ import { useDeleteAllSessions, useDeleteSpecificUserSession } from 'hooks/user/m
 import { useFetchUserSessions } from 'hooks/user/query';
 import React from 'react';
 
-import Slide from '@/components/sidebar/Slide';
 
 
 const SessionPage = () => {
@@ -15,9 +14,8 @@ const SessionPage = () => {
   return (
     <>
       <div>
-        <Slide />
-        <div className='ml-64'>
-          <div className='mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8'></div>
+        <div className=''>
+          <div className='mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8'></div>
           <div className='max-w-screen-xl mx-auto px-4 md:px-8'>
             <div className='items-start justify-between md:flex'>
               <div className='max-w-lg'>

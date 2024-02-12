@@ -7,7 +7,6 @@ import * as Yup from 'yup';
 
 import Appbuttons from '@/components/buttons/Appbuttons';
 import TextInput from '@/components/input/TextInput';
-import Slide from '@/components/sidebar/Slide';
 
 interface ChangePasswordForm {
   old_password: string;
@@ -50,14 +49,13 @@ const ChangePassword = () => {
   return (
     <>
       <div>
-        <Slide />
           <div className='max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8'>
             <div className='mx-auto max-w-lg '>
-              <h1 className='text-2xl font-bold sm:text-3xl'>
+              <h1 className='text-2xl text-center font-bold sm:text-3xl'>
                 Change Password
               </h1>
 
-              <p className='mt-4 text-gray-500'>
+              <p className='mt-4 text-gray-500 text-center'>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Et
                 libero nulla eaque error neque ipsa culpa autem, at itaque
                 nostrum!
@@ -66,7 +64,7 @@ const ChangePassword = () => {
 
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className='mx-auto mb-0 mt-8 max-w-md space-y-4'
+              className='w-full mx-auto mb-0 mt-8 max-w-md space-y-4'
             >
               <Controller
                 render={({ field: { onChange, onBlur, value, name } }) => {
@@ -118,7 +116,7 @@ const ChangePassword = () => {
                 </p>
               )}
 
-              <div className='w-full items-center justify-center'>
+              <div className='w-full flex items-center mt-12 justify-center'>
                 <Appbuttons
                   title='Submit'
                   isLoading={isLoadingChangePassword}

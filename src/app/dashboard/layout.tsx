@@ -11,7 +11,7 @@ const HomeLayout = ({ children }: BrandsLayoutProps) => {
   return (
     <>
       <Slide />
-      <div className='ml-0 md:ml-24'>{children}</div>
+      <div className='ml-0 md:ml-[280px]'>{children}</div>
     </>
   );
 };
