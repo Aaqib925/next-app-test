@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+
 'use client';
 import { useRegisterUser } from 'hooks/auth/mutation';
 import useFormWithSchema from 'hooks/useFormWithSchema';
@@ -84,9 +85,7 @@ const SignUp = () => {
     },
     []
   );
-
   return (
-
     <>
       <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
         <section className="relative flex h-32 items-end bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
@@ -139,9 +138,6 @@ const SignUp = () => {
                 Register your self
               </p>
             </div>
-
-
-
             <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-6'>
               <div className='flex justify-center'>
                 <ImageUpload
@@ -169,9 +165,7 @@ const SignUp = () => {
                   control={control}
                   defaultValue=''
                 />
-
               </div>
-
               <Controller
                 render={({ field: { onChange, onBlur, value, name } }) => {
                   return (
@@ -190,7 +184,6 @@ const SignUp = () => {
                 control={control}
                 defaultValue=""
               />
-
               <div className='flex flex-col gap-4 md:flex-row'>
                 <Controller
                   render={({ field: { onChange, onBlur, value, name } }) => {
@@ -210,7 +203,6 @@ const SignUp = () => {
                   control={control}
                   defaultValue=''
                 />
-
                 <Controller
                   render={({ field: { onChange, onBlur, value, name } }) => {
                     return (
@@ -230,7 +222,6 @@ const SignUp = () => {
                   defaultValue=''
                 />
               </div>
-
               <div className='col-span-6 mt-8 flex flex-col items-center gap-4'>
                 <Appbuttons title='Create an account' />
 
