@@ -11,12 +11,6 @@ import * as Yup from 'yup';
 import Appbuttons from '@/components/buttons/Appbuttons';
 import TextInput from '@/components/input/TextInput';
 
-// interface SignInProps {
-//   searchParams: {
-//     error?: string;
-//   };
-// }
-
 interface SignIn {
   email: string;
   password: string;
@@ -36,15 +30,12 @@ const SignInValidationSchema = Yup.object({
 });
 
 
-const SignIn = (
-  // { searchParams: { error } }: SignInProps
-  ) => {
+const SignIn = () => {
 
   const {
     handleSubmit,
     formState: { errors },
     control,
-    watch
   } = useFormWithSchema(SignInValidationSchema);
 
   const router = useRouter();
