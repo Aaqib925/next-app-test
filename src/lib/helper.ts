@@ -11,3 +11,8 @@ export function getFromSessionStorage(key: string): string | null {
   }
   return null;
 }
+
+
+export const getImagePathUsingBackend = (path: string | undefined) => {
+  return `${process.env.NEXT_PUBLIC_API_URL}/storage/${path}`;
+}

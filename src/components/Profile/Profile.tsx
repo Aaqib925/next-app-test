@@ -1,8 +1,9 @@
 'use client';
 import { useFetchUserProfile } from 'hooks/auth/query';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import Appbuttons from '@/components/buttons/Appbuttons';
+
 interface User {
   username: string;
   email: string;
@@ -16,11 +17,8 @@ interface ProfileProps {
 const Profile: React.FC<ProfileProps> = ({ user }) => {
   // const session = useSession()
 
-  const { data } = useFetchUserProfile()
+  const { data} = useFetchUserProfile()
 
-  useEffect(() => {
-    console.log('User Profile Data: ', data);
-  }, [data])
 
   const [isEditing, setIsEditing] = useState(false);
   const [editedUser, setEditedUser] = useState<User>({ ...user });

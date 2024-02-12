@@ -1,15 +1,13 @@
 'use client';
-import React, { useCallback } from 'react';
-
-import Profile from '@/components/Profile/Profile';
-import Slide from '@/components/sidebar/Slide';
-
-import * as Yup from 'yup';
-import useFormWithSchema from 'hooks/useFormWithSchema';
-import { Controller } from 'react-hook-form';
-import TextInput from '@/components/input/TextInput';
 import { useChangePassword } from 'hooks/auth/mutation';
+import useFormWithSchema from 'hooks/useFormWithSchema';
+import React, { useCallback } from 'react';
+import { Controller } from 'react-hook-form';
+import * as Yup from 'yup';
+
 import Appbuttons from '@/components/buttons/Appbuttons';
+import TextInput from '@/components/input/TextInput';
+import Slide from '@/components/sidebar/Slide';
 
 interface ChangePasswordForm {
   old_password: string;
@@ -53,9 +51,8 @@ const ChangePassword = () => {
     <>
       <div>
         <Slide />
-        <div className='ml-64'>
-          <div className='mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8'>
-            <div className='mx-auto max-w-lg text-center'>
+          <div className='max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8'>
+            <div className='mx-auto max-w-lg '>
               <h1 className='text-2xl font-bold sm:text-3xl'>
                 Change Password
               </h1>
@@ -129,7 +126,6 @@ const ChangePassword = () => {
               </div>
             </form>
           </div>
-        </div>
       </div>
     </>
   );

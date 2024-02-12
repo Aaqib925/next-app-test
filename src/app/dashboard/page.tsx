@@ -1,6 +1,12 @@
+"use client";
+import { useFetchUserProfile } from 'hooks/auth/query';
 import React from 'react';
 
 import Profile from '@/components/Profile/Profile';
+
+import useAuthStore from '@/store/auth';
+
+
 
 const initialUser = {
   username: 'john_doe',
@@ -11,6 +17,14 @@ const initialUser = {
 };
 
 const ProfilePage = () => {
+  const {data, isFetched} = useFetchUserProfile();
+
+  const setUserData = useAuthStore(state => state.setUserData);
+
+  if (isFetched) {
+    setUserData(data.user);
+  }
+
   return (
     <>
       <div>

@@ -77,9 +77,6 @@ export const authOptions: NextAuthOptions = {
         return { ...token, ...session?.user };
       }
 
-      console.log("JWT TOKEN ==> ", token)
-      console.log("JWT USER ==> ", user)
-
       return { ...token, ...user };
     },
     async session({
