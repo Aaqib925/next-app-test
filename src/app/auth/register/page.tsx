@@ -52,7 +52,6 @@ const SignUp = () => {
   } = useFormWithSchema(SignUpValidationSchema);
 
   const onSubmit = useCallback(async (data: SignUpData) => {
-
     const formData = new FormData();
     formData.set('name', data.name);
     formData.set('email', data.email);

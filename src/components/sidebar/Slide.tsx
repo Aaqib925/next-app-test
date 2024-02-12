@@ -9,7 +9,7 @@ const Slide: React.FC = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   return (
-    <div className="md:flex flex-col md:flex-row md:w-full shadow-xl  fixed top-0 bottom-0 left-0 w-1/4">
+    <div className="md:flex flex-col md:flex-row shadow-xl  fixed top-0 bottom-0 left-0 w-[300px]">
       <div onClick={() => isOpen && setIsOpen(false)} className="flex flex-col w-full md:w-64 text-gray-700 bg-white dark-mode:text-gray-200 dark-mode:bg-gray-800 flex-shrink-0">
         <div className="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between">
           <a href="#" className="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline">Flowtrail UI</a>

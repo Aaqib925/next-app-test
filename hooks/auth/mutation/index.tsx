@@ -68,7 +68,6 @@ const changePasswordAction = async (body: ChangePasswordApiRequest) => {
   return await Post({
     url: '/api/v1/change-password',
     body,
-    isAuthorized: true
   })
 }
 
@@ -78,3 +77,18 @@ export const useChangePassword = () => {
       changePasswordAction(body),
   })
 }
+
+const updateProfileAction = async (body: any) => {
+  return await Post({
+    url: '/api/v1/profile/update',
+    body,
+    isFormData: true
+  });
+}
+
+export const useUpdateProfile = () => {
+  return useMutation({
+    mutationFn: async (body: any) =>
+      updateProfileAction(body),
+  });
+};

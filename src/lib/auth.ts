@@ -76,10 +76,7 @@ export const authOptions: NextAuthOptions = {
       if (trigger === 'update' && session) {
         return { ...token, ...session?.user };
       }
-
-      console.log("JWT TOKEN ==> ", token)
-      console.log("JWT USER ==> ", user)
-
+      
       return { ...token, ...user };
     },
     async session({
