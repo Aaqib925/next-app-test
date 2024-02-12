@@ -1,9 +1,10 @@
 
 'use client';
+import { LoginUserApiRequest } from 'hooks/auth/interface';
 import useFormWithSchema from 'hooks/useFormWithSchema';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { Controller } from 'react-hook-form';
 import { AUTH_ROUTES } from 'routes/page';
 import * as Yup from 'yup';
@@ -38,11 +39,12 @@ const SignIn = () => {
     control,
   } = useFormWithSchema(SignInValidationSchema);
 
+  const [isSigningIn, setIsSigningIn] = useState(false);
+
   const router = useRouter();
 
-  const onSubmit = useCallback(async (formData: any) => {
-    console.log("BEING CLICKED");
-    console.log("BEING CLICKED", formData);
+  const onSubmit = useCallback(async (formData: LoginUserApiRequest) => {
+    setIsSigningIn(true);
     await signIn('credentials', {
       email: formData.email,
       password: formData.password,
@@ -50,6 +52,7 @@ const SignIn = () => {
       callbackUrl: '/home'
     })
     router.push('/home');
+    setIsSigningIn(false);
   }, [router]);
 
 
@@ -108,7 +111,7 @@ const SignIn = () => {
               />
 
               <div className='col-span-6 mt-8 flex flex-col items-center gap-4'>
-                <Appbuttons title='Sign In' onClick={handleSubmit(onSubmit)} />
+                <Appbuttons title='Sign In' onClick={handleSubmit(onSubmit)} isLoading={isSigningIn} />
                 <a className='text-sky-600 underline' href={AUTH_ROUTES.FORGETPASS}>Forget Password ?</a>
                 <p className='text-center text-sm text-gray-500'>
                   Don&apos;t have an account?{' '}

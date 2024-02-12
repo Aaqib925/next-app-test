@@ -1,3 +1,15 @@
+export interface RegisterUserApiRequest {
+  name: string;
+  email: string;
+  password: string;
+  profile_image: File;
+}
+
+export interface LoginUserApiRequest {
+  email: string;
+  password: string;
+}
+
 export interface SendOtpApiRequest {
   email: string;
 }
@@ -13,6 +25,6 @@ export interface ResetPasswordApiRequest {
 }
 
 export interface ChangePasswordApiRequest {
-  oldPassword: string;
-  newPassword: string;
+  old_password: string;
+  new_password: string;
 }

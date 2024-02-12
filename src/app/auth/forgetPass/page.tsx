@@ -18,12 +18,6 @@ const forgetPassValidationSchema = Yup.object({
     .required('Email is required.'),
 });
 
-const otpValidationSchema = Yup.object({
-  otp: Yup.string()
-    .matches(/^\d{6}$/, 'OTP must be a 6-digit code')
-    .required('OTP is required.'),
-});
-
 const Otp = () => {
 
   const {mutateAsync: sendOtp} = useSendOtp();

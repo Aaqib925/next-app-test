@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
+import { useRegisterUser } from 'hooks/auth/mutation';
 import useFormWithSchema from 'hooks/useFormWithSchema';
 import React, { SetStateAction, useCallback, useRef, useState } from 'react'
 import { Controller } from 'react-hook-form';
@@ -35,6 +36,8 @@ const SignUpValidationSchema = Yup.object({
 });
 const SignUp = () => {
 
+  const {mutateAsync: registerUser} = useRegisterUser();
+
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedImage, setSelectedImage] = useState('');
 
@@ -52,16 +55,9 @@ const SignUp = () => {
     formData.set('email', data.email);
     formData.set('password', data.password);
     formData.set('profile_image', fileInputRef.current?.files?.[0] as Blob);
-
     console.log("DATA ==> ", data)
-    console.log("FORMDATA ==> ", formData.get('profile_image'))
-
-    // signIn('credentials', {
-    //   formData,
-    //   isNewUser: true,
-    //   callbackUrl: `${window.origin}/home`,
-    // });
-  }, []);
+    registerUser(formData);
+  }, [registerUser]);
 
   const handleImageClick = useCallback(() => {
     fileInputRef.current?.click();

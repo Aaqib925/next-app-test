@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DefaultSession, NextAuthOptions, Session, User } from 'next-auth';
+import { DefaultSession, NextAuthOptions } from 'next-auth';
 import { JWT } from 'next-auth/jwt';
 import Credentials from 'next-auth/providers/credentials';
 
@@ -14,6 +14,26 @@ export interface UserSessionType extends DefaultSession {
   };
 }
 
+export interface UserTokenType {
+  data?: {
+    user?: {
+      token?: string | null;
+      twilioToken: string | null;
+    };
+  };
+}
+
+export interface UserDataSessionType {
+  data?: {
+    user?: {
+      id?: string | null;
+      email?: string | null;
+      token?: string | null;
+      twilioToken: string | null;
+    };
+  };
+}
+
 export const authOptions: NextAuthOptions = {
   providers: [
     Credentials({
@@ -24,7 +44,7 @@ export const authOptions: NextAuthOptions = {
         isNewUser: {},
       },
       async authorize(credentials) {
-        let token;
+        let user = null;
         if (credentials?.isNewUser) {
           try {
             const res = await Post({
@@ -35,33 +55,47 @@ export const authOptions: NextAuthOptions = {
               },
               isAuthorized: false,
             });
-            console.log("RESPONSE MESSAGE ==> ", res)
-            token = res?.data?.access_token;
+            console.log("RESPONSE MESSAGE ==> ", res?.data?.access_token)
+            user = {
+              token: res?.data?.access_token,
+              email: credentials?.email
+            }
           }
           catch (error: any) {
-            console.log("ERROR MESSAGE ==> ", error)
+            console.log("ERROR MESSAGE ==> ", error?.message)
+            throw new Error(error?.message);
           }
         }
-
-        return { token: token , email: credentials?.email };
+        return {
+          token: user?.token,
+          email: credentials?.email,
+        };
       },
     }),
   ],
   callbacks: {
-    async jwt({ token, user }: { token: JWT; user: User }) {
-      return { ...user, ...token };
+    async jwt({ token, trigger, session, user }) {
+      if (trigger === 'update' && session) {
+        return { ...token, ...session?.user };
+      }
+
+      console.log("JWT TOKEN ==> ", token)
+      console.log("JWT USER ==> ", user)
+
+      return { ...token, ...user };
     },
     async session({
       session,
       token,
     }: {
-      session: Session;
+      session: UserSessionType;
       token: JWT;
     }) {
       if (session?.user && token) {
+        session.user.id = token as any;
+        session.user.token = token.token as string;
         session.user.email = token.email as string;
       }
-
       return session;
     },
   },

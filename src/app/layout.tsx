@@ -9,7 +9,7 @@ import '@/styles/colors.css';
 import { authOptions } from '@/lib/auth';
 
 import { siteConfig } from '@/constant/config';
-import { QCProvider } from '@/provider';
+import { AuthProvider, QCProvider } from '@/provider';
 
 // !STARTERCONF Change these default meta
 // !STARTERCONF Look at @/constant/config to change them
@@ -67,9 +67,11 @@ export default async function RootLayout({
     // </html>
     <html>
       <body className='lg:min-h-screen'>
+        <AuthProvider session={session}>
           <QCProvider>
               {children}
           </QCProvider>
+        </AuthProvider>
       </body>
     </html>
   );

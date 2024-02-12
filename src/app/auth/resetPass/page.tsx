@@ -1,8 +1,10 @@
 'use client';
+import { useResetPassword } from 'hooks/auth/mutation';
 import useFormWithSchema from 'hooks/useFormWithSchema';
 import { useRouter } from 'next/navigation';
 import React, { useCallback } from 'react'
 import { Controller } from 'react-hook-form';
+import { AUTH_ROUTES } from 'routes/page';
 import * as Yup from 'yup';
 
 import Appbuttons from '@/components/buttons/Appbuttons';
@@ -22,6 +24,9 @@ const ResetPasswordValidationSchema = Yup.object({
 const ResetPassword = (
     { searchParams: { email } }: ResetPasswordProps
 ) => {
+
+  const {mutateAsync: resetPassword} = useResetPassword()
+
   const router = useRouter();
 
   const {
@@ -36,10 +41,10 @@ const ResetPassword = (
     if(email && formData) {
       console.log("EMAIL ==> ", email)
       console.log("OTP ==> ", formData.password)
-      
-      // router.push(AUTH_ROUTES.SIGN_IN);
+      resetPassword({ email, password: formData.password })
+      router.push(AUTH_ROUTES.SIGN_IN);
     }
-  }, [email]);
+  }, [email, resetPassword, router]);
 
 
   return (
