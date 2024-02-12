@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 import useFormWithSchema from 'hooks/useFormWithSchema';
 import React from 'react'

@@ -4,4 +4,5 @@ export const AUTH_ROUTES = {
   SIGN_UP: '/auth/register',
   OTP: '/auth/otp',
   HOME: '/home',
+  FORGETPASS: '/auth/forgetPass',
 };

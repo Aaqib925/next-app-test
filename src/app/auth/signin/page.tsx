@@ -1,7 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
+
 'use client';
-
-
 import useFormWithSchema from 'hooks/useFormWithSchema';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
@@ -11,7 +9,6 @@ import * as Yup from 'yup';
 
 import Appbuttons from '@/components/buttons/Appbuttons';
 import TextInput from '@/components/input/TextInput';
-
 
 interface SignInProps {
   searchParams: {
@@ -122,7 +119,7 @@ const SignIn = ({ searchParams: { error } }: SignInProps) => {
 
 
                 <Appbuttons title='Sign In' />
-                <a className=' text-sky-600 underline'>Forget Password ?</a>
+                <a className=' text-sky-600 underline' href={AUTH_ROUTES.FORGETPASS}>Forget Password ?</a>
                 <p className=' text-center text-sm text-gray-500'>
                   Don&apos;t have an account?{' '}
                   <a
